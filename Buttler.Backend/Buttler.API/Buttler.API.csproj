@@ -7,4 +7,8 @@
         <RootNamespace>Buttler.Backend</RootNamespace>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Buttler.Logic\Buttler.Logic.csproj" />
+    </ItemGroup>
+
 </Project>

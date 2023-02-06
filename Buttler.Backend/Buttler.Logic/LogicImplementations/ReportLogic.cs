@@ -18,8 +18,7 @@ public class ReportLogic : IReportLogic
 
     public async Task<Report> CreateReportAsync(ReportCreationDto dto)
     {
-        Report report = new Report();
-        Report created = await _reportDao.CreateReportAsync(report);
+        Report created = await _reportDao.CreateReportAsync(dto);
         return created;
     }
 

@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Buttler.Domain.Model;
+using Buttler.Logic.DTOs;
+using Buttler.Logic.LogicInterfaces;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Buttler.Backend.Controllers;
 
@@ -7,20 +10,27 @@ namespace Buttler.Backend.Controllers;
 public class ReportsController : ControllerBase
 {
     
+    private readonly IReportLogic  _reportLogic;
 
-    public ReportsController()
+    public ReportsController(IReportLogic reportLogic)
     {
-        _context = context;
+        this._reportLogic = reportLogic;
     }
 
     [HttpPost]
-    public async Task<ActionResult<Reports>> CreateReport(Reports report)
+    public async Task<ActionResult<Report>> CreateReport(ReportCreationDto dto)
     {
-        
-        
-        _context.Reports.Add(report);
-        await _context.SaveChangesAsync();
+        try
+        {
+            Report created = await _reportLogic.CreateReportAsync(dto);
+            return Created($"/reports/{created.ReportId}", created);
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            return StatusCode(500, e.Message);
+        }
 
-        return CreatedAtAction("GetReport", new { id = report.ReportId }, report);
+
     }
 }
