@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.Domain", "Buttler.Domain\Buttler.Domain.csproj", "{BBA5EB65-7058-4566-A2C6-470F8E23D767}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.Logic", "Buttler.Logic\Buttler.Logic.csproj", "{0A157272-B554-4AED-81E6-5B588533569E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.Data", "Buttler.Data\Buttler.Data.csproj", "{F370CAAE-BF87-46C9-807E-55CED00D4F74}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.API", "Buttler.API\Buttler.API.csproj", "{56DE1B00-0840-41BC-AD46-367BCE70590A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56DE1B00-0840-41BC-AD46-367BCE70590A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56DE1B00-0840-41BC-AD46-367BCE70590A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56DE1B00-0840-41BC-AD46-367BCE70590A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56DE1B00-0840-41BC-AD46-367BCE70590A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
