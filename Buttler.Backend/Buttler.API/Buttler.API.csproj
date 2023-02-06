@@ -4,10 +4,17 @@
         <TargetFramework>net7.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <RootNamespace>Buttler.Backend</RootNamespace>
+        <RootNamespace>Buttler.webAPI</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Buttler.Data\Buttler.Data.csproj" />
+      <ProjectReference Include="..\Buttler.Domain\Buttler.Domain.csproj" />
       <ProjectReference Include="..\Buttler.Logic\Buttler.Logic.csproj" />
     </ItemGroup>
 

@@ -3,7 +3,7 @@ using Buttler.Logic.DTOs;
 using Buttler.Logic.LogicInterfaces;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Buttler.Backend.Controllers;
+namespace Buttler.webAPI.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
@@ -23,7 +23,7 @@ public class ReportsController : ControllerBase
         try
         {
             Report created = await _reportLogic.CreateReportAsync(dto);
-            return Created($"/reports/{created.ReportId}", created);
+            return Created($"/api/reports/{created.ReportId}", created);
         }
         catch (Exception e)
         {
