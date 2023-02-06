@@ -1,6 +1,12 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.Backend", "Buttler.Backend\Buttler.Backend.csproj", "{0C9502C6-E680-495C-8509-332AC383B372}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.API", "Buttler.API\Buttler.API.csproj", "{0C9502C6-E680-495C-8509-332AC383B372}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.Domain", "Buttler.Domain\Buttler.Domain.csproj", "{BBA5EB65-7058-4566-A2C6-470F8E23D767}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.Logic", "Buttler.Logic\Buttler.Logic.csproj", "{0A157272-B554-4AED-81E6-5B588533569E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Buttler.Data", "Buttler.Data\Buttler.Data.csproj", "{F370CAAE-BF87-46C9-807E-55CED00D4F74}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +18,17 @@ Global
 		{0C9502C6-E680-495C-8509-332AC383B372}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0C9502C6-E680-495C-8509-332AC383B372}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0C9502C6-E680-495C-8509-332AC383B372}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BBA5EB65-7058-4566-A2C6-470F8E23D767}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A157272-B554-4AED-81E6-5B588533569E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F370CAAE-BF87-46C9-807E-55CED00D4F74}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
