@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "ButtlerApp2",
+    "slug": "ButtlerApp2",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "ButtlerApp2"
+}
