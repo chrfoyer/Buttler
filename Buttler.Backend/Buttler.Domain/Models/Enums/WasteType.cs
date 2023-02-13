@@ -2,5 +2,5 @@
 
 public enum WasteType
 {
-    CigaretteButts,
+    CigaretteButts = 1,
 }
