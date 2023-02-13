@@ -1,8 +1,8 @@
-import React from 'react';
-import {Button, SafeAreaView, StyleSheet, TextInput} from 'react-native';
+import React from "react";
+import { Button, SafeAreaView, StyleSheet, TextInput } from "react-native";
 
 const ButtCounter = () => {
-  const [number, onChangeNumber] = React.useState('');
+  const [number, onChangeNumber] = React.useState("");
 
   return (
     <SafeAreaView>
@@ -13,9 +13,21 @@ const ButtCounter = () => {
         placeholder="Butt count"
         keyboardType="numeric"
       />
-      <Button 
-        title='Submit'
-        onPress={() => console.log(number)}
+      <Button
+        title="Submit"
+        onPress={() =>
+          fetch("https://m1w13.wiremockapi.cloud/json", {
+            method: "POST",
+            headers: {
+              Accept: "application/json",
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              id: number,
+              value: 'nonsense'
+            }),
+          })
+        }
       />
     </SafeAreaView>
   );
