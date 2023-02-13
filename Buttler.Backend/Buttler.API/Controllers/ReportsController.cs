@@ -30,7 +30,11 @@ public class ReportsController : ControllerBase
             Console.WriteLine(e);
             return StatusCode(500, e.Message);
         }
+    }
 
-
+    [HttpGet]
+    public async Task<ActionResult<string>> HelloWorld()
+    {
+        return "helloworld";
     }
 }
