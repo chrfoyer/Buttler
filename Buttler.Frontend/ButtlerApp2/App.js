@@ -35,7 +35,9 @@ const ButtCounter = () => {
       },
       body: JSON.stringify({
         numberOfWaste: number,
-        wasteType: 1
+        wasteType: 1,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
       }),
     });
     console.log(number + " butts logged");
