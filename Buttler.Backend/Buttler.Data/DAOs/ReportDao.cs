@@ -20,7 +20,7 @@ public class ReportDao : IReportDao
     public async Task<Report> CreateReportAsync(ReportCreationDto dto)
     {
         Report newReport = new Report();
-        newReport.TimeStamp = DateTime.Now;
+        newReport.TimeStamp = DateTime.Now.ToUniversalTime();
         newReport.WasteType = dto.WasteType;
         newReport.NumberOfWaste = dto.NumberOfWaste;
         newReport.latitude = dto.latitude;
