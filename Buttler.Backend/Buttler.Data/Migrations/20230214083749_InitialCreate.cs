@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -15,11 +16,11 @@ namespace Buttler.Data.Migrations
                 name: "Reports",
                 columns: table => new
                 {
-                    ReportId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    TimeStamp = table.Column<DateTime>(type: "TEXT", nullable: false),
-                    NumberOfWaste = table.Column<int>(type: "INTEGER", nullable: false),
-                    WasteType = table.Column<int>(type: "INTEGER", nullable: false)
+                    ReportId = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    TimeStamp = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    NumberOfWaste = table.Column<int>(type: "integer", nullable: false),
+                    WasteType = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {

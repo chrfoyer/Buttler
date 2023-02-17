@@ -8,9 +8,7 @@ public class ApplicationDbContext: DbContext
     public DbSet<Report> Reports { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    {
-        optionsBuilder.UseSqlite("Data Source = ../Buttler.Data/Database.db");
-    }
+        => optionsBuilder.UseNpgsql("Host=buttler1.c0zpqoi4e1d8.eu-north-1.rds.amazonaws.com;Database=buttler_db;Username=postgres;Password=buttlerpass");
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

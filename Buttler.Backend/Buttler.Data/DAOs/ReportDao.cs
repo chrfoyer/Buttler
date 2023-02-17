@@ -1,4 +1,5 @@
-﻿using Buttler.Domain.Model;
+﻿using System.ComponentModel.DataAnnotations;
+using Buttler.Domain.Model;
 using Buttler.Logic.DaoInterfaces;
 using Buttler.Logic.DTOs;
 using Microsoft.EntityFrameworkCore;
@@ -19,7 +20,7 @@ public class ReportDao : IReportDao
     public async Task<Report> CreateReportAsync(ReportCreationDto dto)
     {
         Report newReport = new Report();
-        newReport.TimeStamp = dto.TimeStamp;
+        newReport.TimeStamp = DateTime.Now;
         newReport.WasteType = dto.WasteType;
         newReport.NumberOfWaste = dto.NumberOfWaste;
 
