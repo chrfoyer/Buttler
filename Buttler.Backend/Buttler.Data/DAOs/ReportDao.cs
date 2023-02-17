@@ -23,6 +23,8 @@ public class ReportDao : IReportDao
         newReport.TimeStamp = DateTime.Now;
         newReport.WasteType = dto.WasteType;
         newReport.NumberOfWaste = dto.NumberOfWaste;
+        newReport.latitude = dto.latitude;
+        newReport.longitude = dto.longitude;
 
         EntityEntry<Report> added = await context.Reports.AddAsync(newReport);
         await context.SaveChangesAsync();
