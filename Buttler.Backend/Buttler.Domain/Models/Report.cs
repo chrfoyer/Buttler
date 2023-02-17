@@ -14,4 +14,8 @@ public class Report
 
     [Required]
     public WasteType WasteType { get; set; }
+    
+    public double latitude { get; set; }
+    
+    public double longitude { get; set; }
 }
