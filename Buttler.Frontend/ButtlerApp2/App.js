@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import MapView from "react-native-maps";
 import {
   Button,
   View,
@@ -27,15 +28,17 @@ const ButtCounter = () => {
   };
 
   const sendCount = () => {
-    fetch("https://m1w13.wiremockapi.cloud/json", {
+    fetch("http://34.141.254.228/api/Reports", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: number,
-        value: "nonsense",
+        numberOfWaste: number,
+        wasteType: 1,
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude
       }),
     });
     console.log(number + " butts logged");

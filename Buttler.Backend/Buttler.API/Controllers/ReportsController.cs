@@ -33,8 +33,8 @@ public class ReportsController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<string>> HelloWorld()
+    public async Task<IEnumerable<Report>> getReports()
     {
-        return "helloworld";
+        return await _reportLogic.GetAllReportsAsync();
     }
 }

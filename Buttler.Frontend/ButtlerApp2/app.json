@@ -1,11 +1,20 @@
 {
   "expo": {
-    "name": "ButtlerApp2",
+    "name": "Buttler",
     "slug": "ButtlerApp2",
     "version": "1.0.0",
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "android": {
+      "package": "com.via.buttler",
+      "versionCode": 1
+    },
+    "extra": {
+      "eas": {
+        "projectId": "2ad7364e-c2b0-4b4e-b2ca-8933817a2825"
+      }
+    }
   },
-  "name": "ButtlerApp2"
+  "name": "Buttler"
 }

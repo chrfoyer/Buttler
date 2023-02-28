@@ -1,4 +1,4 @@
-package com.buttlerapp2.newarchitecture.components;
+package com.via.buttler.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;
