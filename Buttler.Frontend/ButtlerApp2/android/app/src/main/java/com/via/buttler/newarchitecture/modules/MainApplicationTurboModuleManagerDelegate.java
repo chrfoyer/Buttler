@@ -1,4 +1,4 @@
-package com.buttlerapp2.newarchitecture.modules;
+package com.via.buttler.newarchitecture.modules;
 
 import com.facebook.jni.HybridData;
 import com.facebook.react.ReactPackage;
