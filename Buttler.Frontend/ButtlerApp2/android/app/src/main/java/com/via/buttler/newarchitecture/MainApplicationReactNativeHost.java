@@ -1,4 +1,4 @@
-package com.buttlerapp2.newarchitecture;
+package com.via.buttler.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -20,9 +20,9 @@ import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.fabric.ReactNativeConfig;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.buttlerapp2.BuildConfig;
-import com.buttlerapp2.newarchitecture.components.MainComponentsRegistry;
-import com.buttlerapp2.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.via.buttler.BuildConfig;
+import com.via.buttler.newarchitecture.components.MainComponentsRegistry;
+import com.via.buttler.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package com.buttlerapp2;
+package com.via.buttler;
 
 import android.os.Build;
 import android.os.Bundle;
