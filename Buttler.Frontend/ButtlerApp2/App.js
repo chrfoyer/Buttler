@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MapView from "react-native-maps";
+import MapView, {PROVIDER_GOOGLE, Marker} from "react-native-maps";
 import {
   Button,
   View,
@@ -47,11 +47,12 @@ const ButtCounter = () => {
 
   return (
     <View style={styles.container}>
+      <Text>How many cigarette butts are in your area?</Text>
       <TextInput
         style={styles.input}
         onChangeText={onChangeNumber}
         value={number}
-        placeholder="Butts"
+        placeholder="#"
         keyboardType="numeric"
       />
       <View style={styles.button}>
@@ -62,6 +63,21 @@ const ButtCounter = () => {
       </View>
       <Text>Latitude: {location ? location.coords.latitude : null}</Text>
       <Text>Longitude: {location ? location.coords.longitude : null}</Text>
+      <MapView
+       provider={PROVIDER_GOOGLE}
+       style={styles.map}
+       initialRegion={{
+         latitude: 55.86219474240435,
+         longitude: 9.84887225819323,
+         latitudeDelta: 0.015,
+         longitudeDelta: 0.0121,
+       }}
+       showUserLocation={true} >
+       <Marker coordinate={{
+         latitude: 55.86217798371234,
+         longitude: 9.851928848679208,
+       }}  />
+   </MapView>
     </View>
   );
 };
@@ -89,5 +105,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: "100%",
   },
+  map: {
+    height: "50%",
+    width: "100%"
+  }
 });
 export default ButtCounter;
