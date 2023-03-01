@@ -17,6 +17,8 @@ builder.Services.AddSwaggerGen();
 //builder.Services.AddScoped<FileContext>();
 builder.Services.AddScoped<IReportDao, ReportDao>();
 builder.Services.AddScoped<IReportLogic, ReportLogic>();
+builder.Services.AddScoped<IUserDao, UserDao>();
+builder.Services.AddScoped<IUserLogic, UserLogic>();
 
 builder.Services.AddDbContext<ApplicationDbContext>();
 
