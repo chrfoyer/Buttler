@@ -6,6 +6,8 @@ namespace Buttler.Logic.DTOs;
 public class ReportCreationDto
 {
    // public DateTime TimeStamp { get; set; }
+   
+   public string userName { get; set; }
 
     public int NumberOfWaste { get; set; }
 

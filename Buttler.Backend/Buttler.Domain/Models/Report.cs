@@ -8,6 +8,8 @@ public class Report
     [Key]
     public int ReportId { get; set; }
     
+    public string userName { get; set; }
+    
     public DateTime TimeStamp { get; set; }
 
     public int NumberOfWaste { get; set; }
