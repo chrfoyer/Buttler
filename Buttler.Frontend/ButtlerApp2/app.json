@@ -6,6 +6,7 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "icon": "ButtlerLogo.png",
     "android": {
       "package": "com.via.buttler",
       "versionCode": 1

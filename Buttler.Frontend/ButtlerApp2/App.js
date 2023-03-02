@@ -47,12 +47,12 @@ const ButtCounter = () => {
 
   return (
     <View style={styles.container}>
-      <Text>How many cigarette butts are in your area?</Text>
+      <Text>How many 🚬 on the ground?</Text>
       <TextInput
         style={styles.input}
         onChangeText={onChangeNumber}
         value={number}
-        placeholder="#"
+        placeholder="🔢"
         keyboardType="numeric"
       />
       <View style={styles.button}>
