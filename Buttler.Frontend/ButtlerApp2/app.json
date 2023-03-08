@@ -9,7 +9,7 @@
     "icon": "ButtlerLogo.png",
     "android": {
       "package": "com.via.buttler",
-      "versionCode": 1
+      "versionCode": 1.01
     },
     "extra": {
       "eas": {
