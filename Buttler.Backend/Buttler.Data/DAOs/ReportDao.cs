@@ -23,9 +23,9 @@ public class ReportDao : IReportDao
         newReport.TimeStamp = DateTime.Now.ToUniversalTime();
         newReport.WasteType = dto.WasteType;
         newReport.NumberOfWaste = dto.NumberOfWaste;
-        newReport.latitude = dto.latitude;
-        newReport.longitude = dto.longitude;
-        newReport.userName = dto.userName;
+        newReport.Latitude = dto.latitude;
+        newReport.Longitude = dto.longitude;
+        newReport.UserName = dto.userName;
 
         EntityEntry<Report> added = await context.Reports.AddAsync(newReport);
         await context.SaveChangesAsync();
@@ -35,6 +35,7 @@ public class ReportDao : IReportDao
     public async Task<IEnumerable<Report>> GetAllReportsAsync()
     {
         List<Report> reports = await context.Reports.ToListAsync();
+       // reports.ForEach(report => Console.WriteLine($"{report}\n"));
         return reports;
     }
 }

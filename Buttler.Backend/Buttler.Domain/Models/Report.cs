@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using Buttler.Domain.Model.Enums;
 
 namespace Buttler.Domain.Model;
@@ -8,7 +9,8 @@ public class Report
     [Key]
     public int ReportId { get; set; }
     
-    public string userName { get; set; }
+    [ForeignKey("UserName")]
+    public string UserName { get; set; }
     
     public DateTime TimeStamp { get; set; }
 
@@ -17,7 +19,7 @@ public class Report
     [Required]
     public WasteType WasteType { get; set; }
     
-    public double latitude { get; set; }
+    public double Latitude { get; set; }
     
-    public double longitude { get; set; }
+    public double Longitude { get; set; }
 }
