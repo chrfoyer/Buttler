@@ -14,6 +14,8 @@ import * as Location from "expo-location";
 const ButtCounter = () => {
   const [number, onChangeNumber] = React.useState("");
   const [location, setLocation] = useState(false);
+  const [markers, setMarkers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // function to check permissions and get Location
   const getLocation = async () => {
@@ -46,21 +48,13 @@ const ButtCounter = () => {
   };
 
   const getReports = () => {
-    fetch("http://34.141.254.228/api/Reports", {
-      method: "GET",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        numberOfWaste: number,
-        wasteType: 1,
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      }),
-    });
-    console.log(number + " butts logged");
-    Alert.alert("Success", "You logged " + number + " butts");
+    useEffect(() => {
+      fetch("http://34.141.254.228/api/Reports")
+        .then((resp) => resp.json())
+        .then((json) => setMarkers(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+    }, []);
   };
 
   return (
