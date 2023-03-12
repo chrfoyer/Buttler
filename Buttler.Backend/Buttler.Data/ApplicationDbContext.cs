@@ -14,6 +14,6 @@ public class ApplicationDbContext: DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Report>().HasKey(report => report.ReportId);
-        modelBuilder.Entity<User>().HasKey(user => user.userID);
+        modelBuilder.Entity<User>().HasKey(user => user.UserID);
     }
 }

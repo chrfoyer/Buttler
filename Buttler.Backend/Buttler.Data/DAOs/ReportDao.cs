@@ -25,7 +25,11 @@ public class ReportDao : IReportDao
         newReport.NumberOfWaste = dto.NumberOfWaste;
         newReport.Latitude = dto.latitude;
         newReport.Longitude = dto.longitude;
+
         newReport.UserName = dto.userName;
+
+        newReport.UserName = dto.UserName;
+
 
         EntityEntry<Report> added = await context.Reports.AddAsync(newReport);
         await context.SaveChangesAsync();

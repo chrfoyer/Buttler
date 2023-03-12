@@ -8,7 +8,7 @@ public class Report
 {
     [Key]
     public int ReportId { get; set; }
-    
+
     [ForeignKey("UserName")]
     public string UserName { get; set; }
     
