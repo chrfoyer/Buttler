@@ -6,5 +6,5 @@ namespace Buttler.Logic.DaoInterfaces;
 public interface IUserDao
 {
     Task<User> CreateReportAsync(UserCreationDTO dto);
-    Task<IEnumerable<User>> GetAllReportsAsync();
+    Task<IEnumerable<User>> GetAllUsersAsync();
 }

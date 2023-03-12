@@ -7,7 +7,7 @@ public class ReportCreationDto
 {
    // public DateTime TimeStamp { get; set; }
    
-   public string userName { get; set; }
+   public string UserName { get; set; }
 
     public int NumberOfWaste { get; set; }
 
