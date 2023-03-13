@@ -37,6 +37,7 @@ const ButtCounter = () => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        userName: "anon",
         numberOfWaste: number,
         wasteType: 1,
         latitude: location.coords.latitude,
