@@ -23,6 +23,6 @@ public class UserLogic : IUserLogic
 
     public Task<IEnumerable<User>> GetAllUsersAsync()
     {
-        return _userDao.GetAllReportsAsync();
+        return _userDao.GetAllUsersAsync();
     }
 }

@@ -20,9 +20,9 @@ public class UserDao : IUserDao
     public async Task<User> CreateReportAsync(UserCreationDTO dto)
     {
         User newUser = new User();
-        newUser.dateCreated = DateTime.Now.ToUniversalTime();
-        newUser.userName = dto.userName;
-        newUser.passWord = dto.passWord;
+        newUser.DateCreated = DateTime.Now.ToUniversalTime();
+        newUser.UserName = dto.userName;
+        newUser.PassWord = dto.passWord;
         
         
         
@@ -31,7 +31,7 @@ public class UserDao : IUserDao
         return added.Entity;
     }
 
-    public async Task<IEnumerable<User>> GetAllReportsAsync()
+    public async Task<IEnumerable<User>> GetAllUsersAsync()
     {
         List<User> users = await context.Users.ToListAsync();
         return users;

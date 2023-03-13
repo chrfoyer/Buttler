@@ -5,13 +5,13 @@ namespace Buttler.Domain.Model;
 public class User
 {
     [Key]
-    public int userID { get; set; }
+    public int UserID { get; set; }
 
     [Required]
-    public string userName { get; set; }
+    public string UserName { get; set; }
     
     [Required]
-    public string passWord { get; set; }
+    public string PassWord { get; set; }
     
-    public DateTime dateCreated { get; set; }
+    public DateTime DateCreated { get; set; }
 }
