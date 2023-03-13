@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import MapView, {PROVIDER_GOOGLE, Marker} from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import {
   Button,
   View,
@@ -14,6 +14,8 @@ import * as Location from "expo-location";
 const ButtCounter = () => {
   const [number, onChangeNumber] = React.useState("");
   const [location, setLocation] = useState(false);
+  const [markers, setMarkers] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   // function to check permissions and get Location
   const getLocation = async () => {
@@ -28,21 +30,32 @@ const ButtCounter = () => {
   };
 
   const sendCount = () => {
-    fetch("http://34.141.254.228/api/Reports", {
+    fetch("http://34.90.196.163/api/Reports", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        userName: "anon",
         numberOfWaste: number,
         wasteType: 1,
         latitude: location.coords.latitude,
-        longitude: location.coords.longitude
+        longitude: location.coords.longitude,
       }),
     });
     console.log(number + " butts logged");
     Alert.alert("Success", "You logged " + number + " butts");
+  };
+
+  const getReports = () => {
+    useEffect(() => {
+      fetch("http://34.141.254.228/api/Reports")
+        .then((resp) => resp.json())
+        .then((json) => setMarkers(json))
+        .catch((error) => console.error(error))
+        .finally(() => setLoading(false));
+    }, []);
   };
 
   return (
@@ -64,20 +77,23 @@ const ButtCounter = () => {
       <Text>Latitude: {location ? location.coords.latitude : null}</Text>
       <Text>Longitude: {location ? location.coords.longitude : null}</Text>
       <MapView
-       provider={PROVIDER_GOOGLE}
-       style={styles.map}
-       initialRegion={{
-         latitude: 55.86219474240435,
-         longitude: 9.84887225819323,
-         latitudeDelta: 0.015,
-         longitudeDelta: 0.0121,
-       }}
-       showUserLocation={true} >
-       <Marker coordinate={{
-         latitude: 55.86217798371234,
-         longitude: 9.851928848679208,
-       }}  />
-   </MapView>
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        initialRegion={{
+          latitude: 55.86219474240435,
+          longitude: 9.84887225819323,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}
+        showUserLocation={true}
+      >
+        <Marker
+          coordinate={{
+            latitude: 55.86217798371234,
+            longitude: 9.851928848679208,
+          }}
+        />
+      </MapView>
     </View>
   );
 };
@@ -107,7 +123,7 @@ const styles = StyleSheet.create({
   },
   map: {
     height: "50%",
-    width: "100%"
-  }
+    width: "100%",
+  },
 });
 export default ButtCounter;
