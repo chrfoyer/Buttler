@@ -23,18 +23,10 @@ public class ReportDao : IReportDao
         newReport.TimeStamp = DateTime.Now.ToUniversalTime();
         newReport.WasteType = dto.WasteType;
         newReport.NumberOfWaste = dto.NumberOfWaste;
-<<<<<<< Updated upstream
-        newReport.Latitude = dto.latitude;
-        newReport.Longitude = dto.longitude;
-
-        newReport.UserName = dto.userName;
-
         newReport.UserName = dto.UserName;
-
-=======
         newReport.Latitude = dto.Latitude;
         newReport.Longitude = dto.Longitude;
->>>>>>> Stashed changes
+
 
         EntityEntry<Report> added = await context.Reports.AddAsync(newReport);
         await context.SaveChangesAsync();
