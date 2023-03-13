@@ -30,7 +30,7 @@ const ButtCounter = () => {
   };
 
   const sendCount = () => {
-    fetch("http://34.141.254.228/api/Reports", {
+    fetch("http://34.90.196.163/api/Reports", {
       method: "POST",
       headers: {
         Accept: "application/json",
