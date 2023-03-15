@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, {useRef, useState, useEffect} from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import {
+  AppState,
   Button,
   View,
   StyleSheet,
@@ -16,6 +17,8 @@ const ButtCounter = () => {
   const [location, setLocation] = useState(false);
   const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
   // function to check permissions and get Location
   const getLocation = async () => {
@@ -28,6 +31,25 @@ const ButtCounter = () => {
     console.log(location);
     setLocation(location);
   };
+
+  useEffect(() => {
+    const subscription = AppState.addEventListener('change', nextAppState => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === 'active'
+      ) {
+        console.log('App has come to the foreground!');
+      }
+
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log('AppState', appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
 
   const sendCount = () => {
     fetch("http://34.90.196.163/api/Reports", {
