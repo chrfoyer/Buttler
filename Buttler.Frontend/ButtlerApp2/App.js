@@ -1,4 +1,4 @@
-import React, {useRef, useState, useEffect} from 'react';
+import React, { useRef, useState, useEffect } from "react";
 import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import {
   AppState,
@@ -33,17 +33,17 @@ const ButtCounter = () => {
   };
 
   useEffect(() => {
-    const subscription = AppState.addEventListener('change', nextAppState => {
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
-        nextAppState === 'active'
+        nextAppState === "active"
       ) {
-        console.log('App has come to the foreground!');
+        console.log("App has come to the foreground!");
       }
 
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
-      console.log('AppState', appState.current);
+      console.log("AppState", appState.current);
     });
 
     return () => {
@@ -70,14 +70,14 @@ const ButtCounter = () => {
     Alert.alert("Success", "You logged " + number + " butts");
   };
 
-  const getReports = () => {
-    useEffect(() => {
-      fetch("http://34.141.254.228/api/Reports")
-        .then((resp) => resp.json())
-        .then((json) => setMarkers(json))
-        .catch((error) => console.error(error))
-        .finally(() => setLoading(false));
-    }, []);
+  const getMarkers = async () => {
+    try {
+      const response = await fetch("http://34.90.196.163/api/Reports");
+      const markers = await response.json();
+      setMarkers(markers);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -94,7 +94,7 @@ const ButtCounter = () => {
         <Button title="Submit" onPress={sendCount} style />
       </View>
       <View style={styles.button}>
-        <Button title="Get Location" onPress={getLocation} />
+        <Button title="Get Markers" onPress={getMarkers} style />
       </View>
       <Text>Latitude: {location ? location.coords.latitude : null}</Text>
       <Text>Longitude: {location ? location.coords.longitude : null}</Text>
