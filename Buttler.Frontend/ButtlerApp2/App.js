@@ -41,6 +41,7 @@ const ButtCounter = () => {
         nextAppState === "active"
       ) {
         console.log("App has come to the foreground!");
+        getLocation();
       }
 
       appState.current = nextAppState;
@@ -95,11 +96,6 @@ const ButtCounter = () => {
       <View style={styles.button}>
         <Button title="Submit" onPress={sendCount} style />
       </View>
-      <View style={styles.button}>
-        <Button title="Get Markers" onPress={getMarkers} style />
-      </View>
-      <Text>Latitude: {location ? location.coords.latitude : null}</Text>
-      <Text>Longitude: {location ? location.coords.longitude : null}</Text>
       <MapView
         provider={PROVIDER_GOOGLE}
         style={styles.map}
