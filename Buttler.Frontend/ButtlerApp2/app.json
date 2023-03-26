@@ -6,10 +6,19 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "icon": "ButtlerLogo.png",
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/icon.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "android": {
       "package": "com.via.buttler",
-      "versionCode": 1.01
+      "versionCode": 1.01,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#000000"
+      }
     },
     "extra": {
       "eas": {
