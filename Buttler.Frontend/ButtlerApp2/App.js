@@ -33,6 +33,8 @@ const ButtCounter = () => {
   };
 
   useEffect(() => {
+    getMarkers();
+    getLocation();
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
@@ -115,6 +117,17 @@ const ButtCounter = () => {
             longitude: 9.851928848679208,
           }}
         />
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+            }}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
       </MapView>
     </View>
   );
