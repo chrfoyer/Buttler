@@ -148,7 +148,7 @@ const ButtCounter = () => {
           ) : (
             markers.map((marker) => (
               <Marker
-                key={marker.id}
+                key={marker.reportid}
                 coordinate={{
                   latitude: marker.latitude,
                   longitude: marker.longitude,
