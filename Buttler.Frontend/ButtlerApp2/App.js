@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import MapView, { PROVIDER_GOOGLE, Marker, Heatmap } from "react-native-maps";
 import {
   AppState,
   Button,
@@ -17,6 +17,7 @@ const ButtCounter = () => {
   const [location, setLocation] = useState(null);
   const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showMarkers, setShowMarkers] = useState(false);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
@@ -96,8 +97,15 @@ const ButtCounter = () => {
     }
   };
 
+  const toggleMarkers = () => {
+    setShowMarkers(!showMarkers);
+  };
+
   return (
     <View style={styles.container}>
+      <View style={styles.switchButton}>
+        <Button title="Heatmap or Markers" onPress={() => toggleMarkers()} />
+      </View>
       <Text>How many 🚬 on the ground?</Text>
       <TextInput
         style={styles.input}
@@ -122,24 +130,38 @@ const ButtCounter = () => {
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
-          <Heatmap
-            points={markers.map((marker) => ({
-              latitude: marker.latitude,
-              longitude: marker.longitude,
-              weight: marker.numberOfWaste,
-            }))}
-            opacity={1}
-            radius={50}
-            gradient={{
-              colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
-              startPoints: [0.01, 0.25, 0.5, 0.75, 1],
-              colorMapSize: 256,
-            }}
-          />
+          {!showMarkers ? (
+            <Heatmap
+              points={markers.map((marker) => ({
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+                weight: marker.numberOfWaste,
+              }))}
+              opacity={1}
+              radius={50}
+              gradient={{
+                colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
+                startPoints: [0.01, 0.25, 0.5, 0.75, 1],
+                colorMapSize: 256,
+              }}
+            />
+          ) : (
+            markers.map((marker) => (
+              <Marker
+                key={marker.reportid}
+                coordinate={{
+                  latitude: marker.latitude,
+                  longitude: marker.longitude,
+                }}
+                title={`Number of Butts: ${marker.numberOfWaste}`}
+              />
+            ))
+          )}
         </MapView>
       )}
     </View>
   );
+  
 };
 
 const styles = StyleSheet.create({
