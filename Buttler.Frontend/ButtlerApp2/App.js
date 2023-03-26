@@ -1,6 +1,7 @@
-import React, { useState } from "react";
-import MapView from "react-native-maps";
+import React, { useRef, useState, useEffect } from "react";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
 import {
+  AppState,
   Button,
   View,
   StyleSheet,
@@ -14,6 +15,10 @@ import * as Location from "expo-location";
 const ButtCounter = () => {
   const [number, onChangeNumber] = React.useState("");
   const [location, setLocation] = useState(false);
+  const [markers, setMarkers] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const appState = useRef(AppState.currentState);
+  const [appStateVisible, setAppStateVisible] = useState(appState.current);
 
   // function to check permissions and get Location
   const getLocation = async () => {
@@ -27,41 +32,103 @@ const ButtCounter = () => {
     setLocation(location);
   };
 
+  useEffect(() => {
+    getMarkers();
+    getLocation();
+    const subscription = AppState.addEventListener("change", (nextAppState) => {
+      if (
+        appState.current.match(/inactive|background/) &&
+        nextAppState === "active"
+      ) {
+        console.log("App has come to the foreground!");
+      }
+
+      appState.current = nextAppState;
+      setAppStateVisible(appState.current);
+      console.log("AppState", appState.current);
+    });
+
+    return () => {
+      subscription.remove();
+    };
+  }, []);
+
   const sendCount = () => {
-    fetch("http://34.141.254.228/api/Reports", {
+    fetch("http://34.90.196.163/api/Reports", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
+        userName: "anon",
         numberOfWaste: number,
         wasteType: 1,
         latitude: location.coords.latitude,
-        longitude: location.coords.longitude
+        longitude: location.coords.longitude,
       }),
     });
     console.log(number + " butts logged");
     Alert.alert("Success", "You logged " + number + " butts");
   };
 
+  const getMarkers = async () => {
+    try {
+      const response = await fetch("http://34.90.196.163/api/Reports");
+      const markers = await response.json();
+      setMarkers(markers);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <View style={styles.container}>
+      <Text>How many 🚬 on the ground?</Text>
       <TextInput
         style={styles.input}
         onChangeText={onChangeNumber}
         value={number}
-        placeholder="Butts"
+        placeholder="🔢"
         keyboardType="numeric"
       />
       <View style={styles.button}>
         <Button title="Submit" onPress={sendCount} style />
       </View>
       <View style={styles.button}>
-        <Button title="Get Location" onPress={getLocation} />
+        <Button title="Get Markers" onPress={getMarkers} style />
       </View>
       <Text>Latitude: {location ? location.coords.latitude : null}</Text>
       <Text>Longitude: {location ? location.coords.longitude : null}</Text>
+      <MapView
+        provider={PROVIDER_GOOGLE}
+        style={styles.map}
+        initialRegion={{
+          latitude: 55.86219474240435,
+          longitude: 9.84887225819323,
+          latitudeDelta: 0.015,
+          longitudeDelta: 0.0121,
+        }}
+        showUserLocation={true}
+      >
+        <Marker
+          coordinate={{
+            latitude: 55.86217798371234,
+            longitude: 9.851928848679208,
+          }}
+        />
+        {markers.map((marker, index) => (
+          <Marker
+            key={index}
+            coordinate={{
+              latitude: marker.latitude,
+              longitude: marker.longitude,
+            }}
+            title={marker.title}
+            description={marker.description}
+          />
+        ))}
+      </MapView>
     </View>
   );
 };
@@ -88,6 +155,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     height: "100%",
+  },
+  map: {
+    height: "50%",
+    width: "100%",
   },
 });
 export default ButtCounter;

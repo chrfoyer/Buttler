@@ -6,15 +6,24 @@
     "assetBundlePatterns": [
       "**/*"
     ],
+    "icon": "ButtlerLogo.png",
     "android": {
       "package": "com.via.buttler",
-      "versionCode": 1
+      "versionCode": 1.01
     },
     "extra": {
       "eas": {
         "projectId": "2ad7364e-c2b0-4b4e-b2ca-8933817a2825"
       }
-    }
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "sdkVersion": "47.0.0",
+    "updates": {
+      "url": "https://u.expo.dev/2ad7364e-c2b0-4b4e-b2ca-8933817a2825"
+    },
+    "ios": {}
   },
   "name": "Buttler"
 }
