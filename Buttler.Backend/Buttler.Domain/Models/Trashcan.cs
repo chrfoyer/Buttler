@@ -1,26 +1,25 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Diagnostics.CodeAnalysis;
 using Buttler.Domain.Model.Enums;
 
 namespace Buttler.Domain.Model;
 
-public class Report
+public class Trashcan
 {
     [Key]
-    public int ReportId { get; set; }
+    public int TrashCanID { get; set; }
 
     [ForeignKey("UserName")]
     public string UserName { get; set; }
     
     public DateTime TimeStamp { get; set; }
 
-    public int NumberOfWaste { get; set; }
-
     [Required]
-    public WasteType WasteType { get; set; }
+    public TrashCanType TrashCanType { get; set; }
     
     public double Latitude { get; set; }
     
     public double Longitude { get; set; }
+    
+    public int NumberOfTrashCans { get; set; }
 }
