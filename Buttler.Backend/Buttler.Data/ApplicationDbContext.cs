@@ -9,16 +9,9 @@ public class ApplicationDbContext: DbContext
     public DbSet<Report> Reports { get; set; }
     public DbSet<User> Users { get; set; }
     public DbSet<Trashcan> TrashCans { get; set; }
-
-    public  String connection =
-        "server=paneldatabase.humbleservers.com;port=3306;database=s18254_Buttler;user=u18254_wOMY0OPp2d;password=+P8.4rceKVvQ^J6JOL5w3Sr0;";
     
-    
-
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-    
-        => optionsBuilder.UseMySql( connection,ServerVersion.AutoDetect(connection));
-
+        => optionsBuilder.UseNpgsql("Host=buttler1.c0zpqoi4e1d8.eu-north-1.rds.amazonaws.com;Database=buttler_db;Username=postgres;Password=buttlerpass");
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
