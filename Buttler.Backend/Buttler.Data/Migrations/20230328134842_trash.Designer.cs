@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Buttler.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230323100042_trashcan")]
-    partial class trashcan
+    [Migration("20230328134842_trash")]
+    partial class trash
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
