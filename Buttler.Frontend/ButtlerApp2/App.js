@@ -133,22 +133,22 @@ const ButtCounter = () => {
           showsMyLocationButton={true}
         >
           {
-            // !showMarkers && markers ? (
-            //   <Heatmap
-            //     points={markers.map((marker) => ({
-            //       latitude: marker.latitude,
-            //       longitude: marker.longitude,
-            //       weight: marker.numberOfWaste,
-            //     }))}
-            //     opacity={1}
-            //     radius={50}
-            //     gradient={{
-            //       colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
-            //       startPoints: [0.01, 0.25, 0.5, 0.75, 1],
-            //       colorMapSize: 256,
-            //     }}
-            //   />
-            // ) :
+            !showMarkers && location ?(
+              <Heatmap
+                points={markers.map((marker) => ({
+                  latitude: marker.latitude,
+                  longitude: marker.longitude,
+                  weight: marker.numberOfWaste,
+                }))}
+                opacity={1}
+                radius={50}
+                gradient={{
+                  colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
+                  startPoints: [0.01, 0.25, 0.5, 0.75, 1],
+                  colorMapSize: 256,
+                }}
+              />
+            ) :
             markers.map((marker) => (
               <Marker
                 key={marker.reportid}
