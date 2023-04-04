@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
-import MapView, { PROVIDER_GOOGLE, Marker, Heatmap } from "react-native-maps";
+import React, { useRef, useState, useEffect, useMemo } from "react";
 import {
   AppState,
   Button,
@@ -11,15 +10,17 @@ import {
   Alert,
 } from "react-native";
 import * as Location from "expo-location";
+import MapView, { PROVIDER_GOOGLE, Marker, Heatmap } from "react-native-maps";
 
 const ButtCounter = () => {
   const [number, onChangeNumber] = React.useState("");
-  const [location, setLocation] = useState(null);
-  const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showMarkers, setShowMarkers] = useState(false);
+  const [showMarkers, setShowMarkers] = useState(true);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [location, setLocation] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const markerMemo = useMemo(() => getMarkers, [markers]);
 
   // function to check permissions and get Location
   const getLocation = async () => {
@@ -38,9 +39,18 @@ const ButtCounter = () => {
     }
   };
 
+  const getMarkers = async () => {
+    try {
+      const response = await fetch("http://34.90.196.163/api/Reports");
+      const markers = await response.json();
+      setMarkers(markers);
+      setLoading(false);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    getMarkers();
-    getLocation();
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
@@ -55,6 +65,8 @@ const ButtCounter = () => {
       console.log("AppState", appState.current);
     });
 
+    getLocation();
+    getMarkers();
     return () => {
       subscription.remove();
     };
@@ -84,16 +96,6 @@ const ButtCounter = () => {
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Failed to submit count. Please try again.");
-    }
-  };
-
-  const getMarkers = async () => {
-    try {
-      const response = await fetch("http://34.90.196.163/api/Reports");
-      const markers = await response.json();
-      setMarkers(markers);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -130,22 +132,23 @@ const ButtCounter = () => {
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
-          {!showMarkers ? (
-            <Heatmap
-              points={markers.map((marker) => ({
-                latitude: marker.latitude,
-                longitude: marker.longitude,
-                weight: marker.numberOfWaste,
-              }))}
-              opacity={1}
-              radius={50}
-              gradient={{
-                colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
-                startPoints: [0.01, 0.25, 0.5, 0.75, 1],
-                colorMapSize: 256,
-              }}
-            />
-          ) : (
+          {
+            !showMarkers && location ?(
+              <Heatmap
+                points={markers.map((marker) => ({
+                  latitude: marker.latitude,
+                  longitude: marker.longitude,
+                  weight: marker.numberOfWaste,
+                }))}
+                opacity={1}
+                radius={50}
+                gradient={{
+                  colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
+                  startPoints: [0.01, 0.25, 0.5, 0.75, 1],
+                  colorMapSize: 256,
+                }}
+              />
+            ) :
             markers.map((marker) => (
               <Marker
                 key={marker.reportid}
@@ -156,12 +159,12 @@ const ButtCounter = () => {
                 title={`Number of Butts: ${marker.numberOfWaste}`}
               />
             ))
-          )}
+          }
+          {markerMemo}
         </MapView>
       )}
     </View>
   );
-  
 };
 
 const styles = StyleSheet.create({
