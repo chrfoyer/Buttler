@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect, useMemo } from "react";
+import React, { useRef, useState, useLayoutEffect, useMemo } from "react";
 import {
   AppState,
   Button,
@@ -50,7 +50,7 @@ const ButtCounter = () => {
     }
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
@@ -70,7 +70,7 @@ const ButtCounter = () => {
     return () => {
       subscription.remove();
     };
-  }, []);
+  }, [markers]);
 
   const sendCount = async () => {
     try {

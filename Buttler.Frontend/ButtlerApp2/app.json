@@ -2,7 +2,7 @@
   "expo": {
     "name": "Buttler",
     "slug": "ButtlerApp2",
-    "version": "1.0.0",
+    "version": "0.1.2",
     "assetBundlePatterns": [
       "**/*"
     ],
