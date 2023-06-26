@@ -22,28 +22,53 @@ const ButtCounter = () => {
   const [markers, setMarkers] = useState([]);
   const markerMemo = useMemo(() => getMarkers, [markers]);
 
-  // function to check permissions and get Location
-  const getLocation = async () => {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission denied. Enter the location manually.");
-        return;
+  const throttle = (func, limit) => {
+    let lastFunc;
+    let lastRan;
+    return function (...args) {
+      const context = this;
+      if (!lastRan) {
+        func.call(context, ...args);
+        lastRan = Date.now();
+      } else {
+        clearTimeout(lastFunc);
+        lastFunc = setTimeout(function () {
+          if (Date.now() - lastRan >= limit) {
+            func.call(context, ...args);
+            lastRan = Date.now();
+          }
+        }, limit - (Date.now() - lastRan));
       }
-      const location = await Location.getCurrentPositionAsync({});
-      console.log(location);
-      setLocation(location);
-    } catch (error) {
-      console.log(error);
-      Alert.alert("Error", "Failed to get location. Please try again.");
-    }
+    };
   };
+
+  const getLocation = useMemo(
+    () =>
+      throttle(async () => {
+        try {
+          const { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== "granted") {
+            console.log("Permission denied. Enter the location manually.");
+            return;
+          }
+          const location = await Location.getCurrentPositionAsync({});
+          console.log(location);
+          setLocation(location);
+        } catch (error) {
+          console.log(error);
+          Alert.alert("Error", "Failed to get location. Please try again.");
+        }
+      }, 1000),
+    []
+  );
 
   const getMarkers = async () => {
     try {
       const response = await fetch("http://34.90.196.163/api/Reports");
       const markers = await response.json();
-      setMarkers(markers);
+      keyedMarkers = markers.map(obj => ({ key: obj.reportId, ...obj }))
+      console.log(keyedMarkers);
+      setMarkers(keyedMarkers);
       setLoading(false);
     } catch (error) {
       console.log(error);
@@ -136,6 +161,7 @@ const ButtCounter = () => {
             !showMarkers && location ?(
               <Heatmap
                 points={markers.map((marker) => ({
+                  key: marker.reportid,
                   latitude: marker.latitude,
                   longitude: marker.longitude,
                   weight: marker.numberOfWaste,
