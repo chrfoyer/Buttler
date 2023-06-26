@@ -1,5 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
-import MapView, { PROVIDER_GOOGLE, Marker, Heatmap } from "react-native-maps";
+import React, { useRef, useState, useLayoutEffect, useMemo } from "react";
 import {
   AppState,
   Button,
@@ -11,36 +10,94 @@ import {
   Alert,
 } from "react-native";
 import * as Location from "expo-location";
+import MapView, { PROVIDER_GOOGLE, Marker, Heatmap } from "react-native-maps";
 
 const ButtCounter = () => {
   const [number, onChangeNumber] = React.useState("");
-  const [location, setLocation] = useState(null);
-  const [markers, setMarkers] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showMarkers, setShowMarkers] = useState(false);
+  const [showMarkers, setShowMarkers] = useState(true);
   const appState = useRef(AppState.currentState);
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
+  const [location, setLocation] = useState(null);
+  const [markers, setMarkers] = useState([]);
+  const markerMemo = useMemo(() => {
+    return markers.map((marker) => (
+      <Marker
+        key={marker.reportid}
+        coordinate={{
+          latitude: marker.latitude,
+          longitude: marker.longitude,
+        }}
+        title={`Number of Butts: ${marker.numberOfWaste}`}
+      />
+    ));
+  }, [markers]);
 
-  // function to check permissions and get Location
-  const getLocation = async () => {
-    try {
-      const { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.log("Permission denied. Enter the location manually.");
-        return;
+  const throttle = (func, limit) => {
+    let lastFunc;
+    let lastRan;
+    return function (...args) {
+      const context = this;
+      if (!lastRan) {
+        func.call(context, ...args);
+        lastRan = Date.now();
+      } else {
+        clearTimeout(lastFunc);
+        lastFunc = setTimeout(function () {
+          if (Date.now() - lastRan >= limit) {
+            func.call(context, ...args);
+            lastRan = Date.now();
+          }
+        }, limit - (Date.now() - lastRan));
       }
-      const location = await Location.getCurrentPositionAsync({});
-      console.log(location);
-      setLocation(location);
-    } catch (error) {
-      console.log(error);
-      Alert.alert("Error", "Failed to get location. Please try again.");
-    }
+    };
   };
 
-  useEffect(() => {
-    getMarkers();
-    getLocation();
+  const getLocation = useMemo(
+    () =>
+      throttle(async () => {
+        try {
+          const { status } = await Location.requestForegroundPermissionsAsync();
+          if (status !== "granted") {
+            console.log("Permission denied. Enter the location manually.");
+            return;
+          }
+          const location = await Location.getCurrentPositionAsync({});
+          console.log(location);
+          setLocation(location);
+        } catch (error) {
+          console.log(error);
+          Alert.alert("Error", "Failed to get location. Please try again.");
+        }
+      }, 1000),
+    []
+  );
+
+  // async function getMarkers() {
+  //   try {
+  //     const response = await fetch("http://34.90.196.163/api/Reports");
+  //     const markers = await response.json();
+  //     setLoading(false);
+  //     console.log(markers[0]);
+  //     return markers;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return [];
+  //   }
+  // };
+
+  useLayoutEffect(() => {
+    const getMarkers = async () => {
+      try {
+        const response = await fetch("http://34.90.196.163/api/Reports");
+        const markers = await response.json();
+        setMarkers(markers);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
@@ -49,12 +106,19 @@ const ButtCounter = () => {
         console.log("App has come to the foreground!");
         getLocation();
       }
-
+  
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
       console.log("AppState", appState.current);
     });
-
+  
+    const getLocationAndMarkers = async () => {
+      await getLocation();
+      await getMarkers();
+    };
+  
+    getLocationAndMarkers();
+  
     return () => {
       subscription.remove();
     };
@@ -84,16 +148,6 @@ const ButtCounter = () => {
     } catch (error) {
       console.log(error);
       Alert.alert("Error", "Failed to submit count. Please try again.");
-    }
-  };
-
-  const getMarkers = async () => {
-    try {
-      const response = await fetch("http://34.90.196.163/api/Reports");
-      const markers = await response.json();
-      setMarkers(markers);
-    } catch (error) {
-      console.log(error);
     }
   };
 
@@ -130,9 +184,10 @@ const ButtCounter = () => {
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
-          {!showMarkers ? (
+          {!showMarkers && location ? (
             <Heatmap
               points={markers.map((marker) => ({
+                key: marker.reportid,
                 latitude: marker.latitude,
                 longitude: marker.longitude,
                 weight: marker.numberOfWaste,
@@ -157,11 +212,11 @@ const ButtCounter = () => {
               />
             ))
           )}
+          {markerMemo}
         </MapView>
       )}
     </View>
   );
-  
 };
 
 const styles = StyleSheet.create({
