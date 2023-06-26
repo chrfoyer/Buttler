@@ -20,7 +20,18 @@ const ButtCounter = () => {
   const [appStateVisible, setAppStateVisible] = useState(appState.current);
   const [location, setLocation] = useState(null);
   const [markers, setMarkers] = useState([]);
-  const markerMemo = useMemo(() => getMarkers, [markers]);
+  const markerMemo = useMemo(() => {
+    return markers.map((marker) => (
+      <Marker
+        key={marker.reportid}
+        coordinate={{
+          latitude: marker.latitude,
+          longitude: marker.longitude,
+        }}
+        title={`Number of Butts: ${marker.numberOfWaste}`}
+      />
+    ));
+  }, [markers]);
 
   const throttle = (func, limit) => {
     let lastFunc;
@@ -62,20 +73,31 @@ const ButtCounter = () => {
     []
   );
 
-  const getMarkers = async () => {
-    try {
-      const response = await fetch("http://34.90.196.163/api/Reports");
-      const markers = await response.json();
-      keyedMarkers = markers.map(obj => ({ key: obj.reportId, ...obj }))
-      console.log(keyedMarkers);
-      setMarkers(keyedMarkers);
-      setLoading(false);
-    } catch (error) {
-      console.log(error);
-    }
-  };
+  // async function getMarkers() {
+  //   try {
+  //     const response = await fetch("http://34.90.196.163/api/Reports");
+  //     const markers = await response.json();
+  //     setLoading(false);
+  //     console.log(markers[0]);
+  //     return markers;
+  //   } catch (error) {
+  //     console.log(error);
+  //     return [];
+  //   }
+  // };
 
   useLayoutEffect(() => {
+    const getMarkers = async () => {
+      try {
+        const response = await fetch("http://34.90.196.163/api/Reports");
+        const markers = await response.json();
+        setMarkers(markers);
+        setLoading(false);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+  
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
@@ -84,18 +106,23 @@ const ButtCounter = () => {
         console.log("App has come to the foreground!");
         getLocation();
       }
-
+  
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
       console.log("AppState", appState.current);
     });
-
-    getLocation();
-    getMarkers();
+  
+    const getLocationAndMarkers = async () => {
+      await getLocation();
+      await getMarkers();
+    };
+  
+    getLocationAndMarkers();
+  
     return () => {
       subscription.remove();
     };
-  }, [markers]);
+  }, []);
 
   const sendCount = async () => {
     try {
@@ -157,24 +184,23 @@ const ButtCounter = () => {
           showsUserLocation={true}
           showsMyLocationButton={true}
         >
-          {
-            !showMarkers && location ?(
-              <Heatmap
-                points={markers.map((marker) => ({
-                  key: marker.reportid,
-                  latitude: marker.latitude,
-                  longitude: marker.longitude,
-                  weight: marker.numberOfWaste,
-                }))}
-                opacity={1}
-                radius={50}
-                gradient={{
-                  colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
-                  startPoints: [0.01, 0.25, 0.5, 0.75, 1],
-                  colorMapSize: 256,
-                }}
-              />
-            ) :
+          {!showMarkers && location ? (
+            <Heatmap
+              points={markers.map((marker) => ({
+                key: marker.reportid,
+                latitude: marker.latitude,
+                longitude: marker.longitude,
+                weight: marker.numberOfWaste,
+              }))}
+              opacity={1}
+              radius={50}
+              gradient={{
+                colors: ["#00ADEF", "#00639C", "#FFC500", "#FF6900", "#FF0D00"],
+                startPoints: [0.01, 0.25, 0.5, 0.75, 1],
+                colorMapSize: 256,
+              }}
+            />
+          ) : (
             markers.map((marker) => (
               <Marker
                 key={marker.reportid}
@@ -185,7 +211,7 @@ const ButtCounter = () => {
                 title={`Number of Butts: ${marker.numberOfWaste}`}
               />
             ))
-          }
+          )}
           {markerMemo}
         </MapView>
       )}
