@@ -12,6 +12,8 @@ import {
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker, Heatmap } from "react-native-maps";
 
+const baseUrl = "buttler8700.azurewebsites.net";
+
 const ButtCounter = () => {
   const [number, onChangeNumber] = React.useState("");
   const [loading, setLoading] = useState(true);
@@ -89,7 +91,7 @@ const ButtCounter = () => {
   useLayoutEffect(() => {
     const getMarkers = async () => {
       try {
-        const response = await fetch("http://34.90.196.163/api/Reports");
+        const response = await fetch(baseUrl + "/api/Reports");
         const markers = await response.json();
         setMarkers(markers);
         setLoading(false);
@@ -97,7 +99,7 @@ const ButtCounter = () => {
         console.log(error);
       }
     };
-  
+
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
@@ -106,19 +108,19 @@ const ButtCounter = () => {
         console.log("App has come to the foreground!");
         getLocation();
       }
-  
+
       appState.current = nextAppState;
       setAppStateVisible(appState.current);
       console.log("AppState", appState.current);
     });
-  
+
     const getLocationAndMarkers = async () => {
       await getLocation();
       await getMarkers();
     };
-  
+
     getLocationAndMarkers();
-  
+
     return () => {
       subscription.remove();
     };
@@ -126,7 +128,7 @@ const ButtCounter = () => {
 
   const sendCount = async () => {
     try {
-      const response = await fetch("http://34.90.196.163/api/Reports", {
+      const response = await fetch(baseUrl + "/api/Reports", {
         method: "POST",
         headers: {
           Accept: "application/json",
