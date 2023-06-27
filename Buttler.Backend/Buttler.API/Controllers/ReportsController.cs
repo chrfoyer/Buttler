@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Buttler.webAPI.Controllers;
 
-[Route("api/[controller]")]
+[Route("api/reports")]
 [ApiController]
 public class ReportsController : ControllerBase
 {
