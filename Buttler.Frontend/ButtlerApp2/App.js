@@ -12,7 +12,7 @@ import {
 import * as Location from "expo-location";
 import MapView, { PROVIDER_GOOGLE, Marker, Heatmap } from "react-native-maps";
 
-const baseUrl = "buttler8700.azurewebsites.net";
+const baseUrl = "http://buttler-container.azurewebsites.net";
 
 const ButtCounter = () => {
   const [number, onChangeNumber] = React.useState("");
